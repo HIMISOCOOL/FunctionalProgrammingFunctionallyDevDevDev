@@ -1,0 +1,14 @@
+{
+  "name": "devdevdev",
+  "version": "0.0.1",
+  "description": "Demo Ts code for dev dev dev",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Meehan and Conny S",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^2.4.2"
+  }
+}
