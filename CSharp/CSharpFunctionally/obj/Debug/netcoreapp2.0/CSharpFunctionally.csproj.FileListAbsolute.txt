@@ -1,0 +1,11 @@
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\bin\Debug\netcoreapp2.0\CSharpFunctionally.deps.json
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\bin\Debug\netcoreapp2.0\CSharpFunctionally.runtimeconfig.json
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\bin\Debug\netcoreapp2.0\CSharpFunctionally.runtimeconfig.dev.json
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\bin\Debug\netcoreapp2.0\CSharpFunctionally.dll
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\bin\Debug\netcoreapp2.0\CSharpFunctionally.pdb
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\obj\Debug\netcoreapp2.0\CSharpFunctionally.csprojResolveAssemblyReference.cache
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\obj\Debug\netcoreapp2.0\CSharpFunctionally.csproj.CoreCompileInputs.cache
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\obj\Debug\netcoreapp2.0\CSharpFunctionally.AssemblyInfoInputs.cache
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\obj\Debug\netcoreapp2.0\CSharpFunctionally.AssemblyInfo.cs
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\obj\Debug\netcoreapp2.0\CSharpFunctionally.dll
+C:\dev\Intergen\DevDevDev\FunctionalProgrammingFunctionallyDevDevDev\CSharp\CSharpFunctionally\obj\Debug\netcoreapp2.0\CSharpFunctionally.pdb
