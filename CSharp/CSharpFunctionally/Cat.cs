@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MoreLinq;
+using CSharpFunctionally.Extensions;
 
 namespace CSharpFunctionally
 {
@@ -86,23 +87,45 @@ namespace CSharpFunctionally
 
         public static Cat GenerateCat()
         {
-            var randomIndex = random.Next(0, ReferenceData.Guids.Count);
-            var randomGuidString = ReferenceData.Guids[randomIndex];
+            var randomIndexGuid = random.Next(0, ReferenceData.Guids.Count);
+            var randomGuidString = ReferenceData.Guids[randomIndexGuid];
             var randomGuid = Guid.Parse(randomGuidString);
-            
+
+            var randomIndexName = random.Next(0, DistinctPopularNames.Count);
+            var randomName = DistinctPopularNames[randomIndexGuid];
+
             return new Cat
             {
                 Age = random.Next(0, 15),
-                Id = ReferenceData.Guids.RandomSubset(1).Select(s => Guid.Parse(s)).First(),
-                Name = DistinctPopularNames.RandomSubset(1).First()
+                Id = randomGuid,
+                Name = randomName
             };
         }
 
         public static List<Cat> GenerateCats(int number)
         {
-            return Enumerable.Range(0, number)
-                .Select(i => GenerateCat())
-                .ToList();
+            var cats = new List<Cat>();
+
+            for (int i = 0; i < number; i++)
+            {
+                var randomIndexGuid = random.Next(0, ReferenceData.Guids.Count);
+                var randomGuidString = ReferenceData.Guids[randomIndexGuid];
+                var randomGuid = Guid.Parse(randomGuidString);
+
+                var randomIndexName = random.Next(0, DistinctPopularNames.Count);
+                var randomName = DistinctPopularNames[randomIndexGuid];
+
+                var cat = new Cat
+                {
+                    Age = random.Next(0, 15),
+                    Id = randomGuid,
+                    Name = randomName
+                };
+
+                cats.Add(cat);
+            }
+
+            return cats;
         }
     }
 
@@ -166,9 +189,11 @@ namespace CSharpFunctionally
             "Chanel",
         };
         public static List<string> DistinctPopularNames =
-            PopularCatNamesAustralia.Concat(PopularCatNamesCanada)
-            .Concat(PopularCatNamesGermany)
-            .Concat(PopularCatNamesUK)
+            EnumerableExtensions.Concat(
+                PopularCatNamesAustralia,
+                PopularCatNamesCanada,
+                PopularCatNamesGermany,
+                PopularCatNamesUK)
             .Distinct()
             .ToList();
 
