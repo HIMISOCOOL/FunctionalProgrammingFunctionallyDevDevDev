@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CSharpFunctionally
 {
@@ -6,7 +7,12 @@ namespace CSharpFunctionally
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var demo1 = new ExceptAndIntersectFunctionally();
+
+            var random = new Random();
+            var newCats = Cat.GenerateCats(random.Next(0, 9));
+
+            demo1.AddNewCats(newCats);
         }
     }
 }

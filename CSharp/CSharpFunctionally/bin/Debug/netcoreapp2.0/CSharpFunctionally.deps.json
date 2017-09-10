@@ -1,14 +1,22 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+    "signature": "6f0d51e51382c0c3debd5d2623f95760327eaac0"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.0": {
       "CSharpFunctionally/1.0.0": {
+        "dependencies": {
+          "morelinq": "2.7.0"
+        },
         "runtime": {
           "CSharpFunctionally.dll": {}
+        }
+      },
+      "morelinq/2.7.0": {
+        "runtime": {
+          "lib/netstandard2.0/MoreLinq.dll": {}
         }
       }
     }
@@ -18,6 +26,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "morelinq/2.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sZ0k5XtoA4/lh7pRRS1d9ZQZghHfVM6OUrfJyjntD1uwIjwuoPJKj26Nt7pTyVMLH+g+tjaQz3Dzm97Q0npxPg==",
+      "path": "morelinq/2.7.0",
+      "hashPath": "morelinq.2.7.0.nupkg.sha512"
     }
   }
 }
