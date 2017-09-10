@@ -10,6 +10,10 @@ class Cat {
         this.name = name;
     }
 }
+
+/**
+ * map is foreach but returns somthing!
+ */
 function ageCats(cats: Cat[]) {
     let newCats = [];
     for (let i = 0; i < cats.length; i++) {
@@ -27,10 +31,10 @@ function ageCatsF(cats: Cat[]) {
     });
 }
 
-/**
- * map is foreach but returns somthing!
- */
 
+/**
+ * Filter is a foreach with an if and returns somthing!
+ */
 function olderCats(cats: Cat[]) {
     let oldCats = [];
     for (let i = 0; i < cats.length; i++) {
@@ -44,10 +48,10 @@ function olderCatsF(cats: Cat[]) {
     return cats.filter(c => c.age > 5);
 }
 
-/**
- * Filter is a foreach with an if and returns somthing!
- */
 
+/**
+ * YOU CAN FITLER AND MAP IN ONE(ish) LINES!
+ */
 function nameOlderCats(cats: Cat[]) {
     let oldCats = [];
     for (let i = 0; i < cats.length; i++) {
@@ -69,9 +73,8 @@ function nameOlderCatsF(cats: Cat[]) {
 }
 
 /**
- * YOU CAN FITLER AND MAP IN ONE(ish) LINES!
+ * Calculating the average was never easier
  */
-
 function averageAge(cats: Cat[]) {
     let total = 0;
     for (let i = 0; i < cats.length; i++) {
@@ -86,10 +89,6 @@ function averageAgeF(cats: Cat[]) {
         .map(c => c.age)
         .reduce((prev, curr) => prev + curr) / cats.length;
 }
-
-/**
- * Calculating the average was never easier
- */
 
 class ResultCommonLogic {
     public readonly isFailure: boolean;
@@ -202,7 +201,9 @@ export class ResultT<T> extends Result {
     }
 }
 
-
+/**
+ * result makes some thing easier, requires a package from npm :( OR you can write your own, like me
+ */
 class CommandService {
     undoStack = [];
     redoStack = []
@@ -283,10 +284,8 @@ class CommandServiceF {
 }
 
 /**
- * result makes some thing easier, requires a package from npm :( OR you can write your own, like me
+ * Using local functions can help make code more readable
  */
-
-
 class BadMan {
     public foodService;
     constructor() {
@@ -316,9 +315,66 @@ class GoodMan {
 
     public static feedCatsBetter(cats: Cat[], foodService, today: Date) {
         const feedCat = (cat: Cat) => cat.feed(foodService.getCatFood(today));
+        const catStillHungry = (cat: Cat) => cat.hunger > 2;
         cats.forEach(feedCat);
-        return cats.filter(c => c.hunger > 2);
+        return cats.filter(catStillHungry);
     }
+}
+
+
+/**
+ * Inline if (ternary operator) for no mutation if statements
+ */
+class IfElse {
+    /**
+     * static mutating if
+     * @param cats 
+     */
+    public static inspectCats(cats: Cat[]) {
+        let result = '';
+        if (cats.some(c => c.isHyperActive)) {
+            result = 'We got a hyper active cat!';
+        } else {
+            result = 'We are all green here sir';
+        }
+        return result;
+    }
+
+    /**
+     * static non mutating if
+     * @param cats 
+     */
+    public static inspectCatsF(cats: Cat[]) {
+        return cats.some(c => c.isHyperActive)
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
+    }
+
+    /**
+     * better looking static no mutating if
+     */
+    public static inspectCatsFOther = (cats: Cat[]) =>
+        cats.some(c => c.isHyperActive)
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
+
+    /**
+     * Instance method non mutating if
+     * @param cats 
+     */
+    public inspectCatsIF(cats: Cat[]) {
+        return cats.some(c => c.isHyperActive)
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
+    }
+
+    /**
+     * Instance function non mutating if
+     */
+    public inspectCatsIFOther = (cats: Cat[]) =>
+        cats.some(c => c.isHyperActive)
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
 }
 
 class Chess {

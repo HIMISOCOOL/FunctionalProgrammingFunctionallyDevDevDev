@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Cat = (function () {
+var Cat = /** @class */ (function () {
     function Cat(name) {
         this.age = 0;
         this.isHyperActive = true;
@@ -21,6 +21,9 @@ var Cat = (function () {
     };
     return Cat;
 }());
+/**
+ * map is foreach but returns somthing!
+ */
 function ageCats(cats) {
     var newCats = [];
     for (var i = 0; i < cats.length; i++) {
@@ -37,7 +40,7 @@ function ageCatsF(cats) {
     });
 }
 /**
- * map is foreach but returns somthing!
+ * Filter is a foreach with an if and returns somthing!
  */
 function olderCats(cats) {
     var oldCats = [];
@@ -52,7 +55,7 @@ function olderCatsF(cats) {
     return cats.filter(function (c) { return c.age > 5; });
 }
 /**
- * Filter is a foreach with an if and returns somthing!
+ * YOU CAN FITLER AND MAP IN ONE(ish) LINES!
  */
 function nameOlderCats(cats) {
     var oldCats = [];
@@ -73,7 +76,7 @@ function nameOlderCatsF(cats) {
     });
 }
 /**
- * YOU CAN FITLER AND MAP IN ONE(ish) LINES!
+ * Calculating the average was never easier
  */
 function averageAge(cats) {
     var total = 0;
@@ -88,10 +91,7 @@ function averageAgeF(cats) {
         .map(function (c) { return c.age; })
         .reduce(function (prev, curr) { return prev + curr; }) / cats.length;
 }
-/**
- * Calculating the average was never easier
- */
-var ResultCommonLogic = (function () {
+var ResultCommonLogic = /** @class */ (function () {
     function ResultCommonLogic(isFailure, error) {
         if (isFailure) {
             if (!error) {
@@ -124,7 +124,7 @@ var ResultCommonLogic = (function () {
     });
     return ResultCommonLogic;
 }());
-var Result = (function () {
+var Result = /** @class */ (function () {
     function Result(isFailure, error) {
         this._logic = new ResultCommonLogic(isFailure, error);
     }
@@ -192,7 +192,7 @@ var Result = (function () {
 exports.Result = Result;
 exports.ok = Result.okT;
 exports.err = Result.errT;
-var ResultT = (function (_super) {
+var ResultT = /** @class */ (function (_super) {
     __extends(ResultT, _super);
     function ResultT(isFailure, value, error) {
         var _this = _super.call(this, isFailure, error) || this;
@@ -215,7 +215,10 @@ var ResultT = (function (_super) {
     return ResultT;
 }(Result));
 exports.ResultT = ResultT;
-var CommandService = (function () {
+/**
+ * result makes some thing easier, requires a package from npm :( OR you can write your own, like me
+ */
+var CommandService = /** @class */ (function () {
     function CommandService() {
         this.undoStack = [];
         this.redoStack = [];
@@ -249,7 +252,7 @@ var CommandService = (function () {
     };
     return CommandService;
 }());
-var CommandServiceF = (function () {
+var CommandServiceF = /** @class */ (function () {
     function CommandServiceF() {
         this.undoStack = [];
         this.redoStack = [];
@@ -291,9 +294,9 @@ var CommandServiceF = (function () {
     return CommandServiceF;
 }());
 /**
- * result makes some thing easier, requires a package from npm :( OR you can write your own, like me
+ * Using local functions can help make code more readable
  */
-var BadMan = (function () {
+var BadMan = /** @class */ (function () {
     function BadMan() {
     }
     BadMan.prototype.feedCats = function (cats) {
@@ -310,7 +313,7 @@ var BadMan = (function () {
     };
     return BadMan;
 }());
-var GoodMan = (function () {
+var GoodMan = /** @class */ (function () {
     function GoodMan() {
     }
     GoodMan.feedCats = function (cats, foodService, today) {
@@ -319,12 +322,69 @@ var GoodMan = (function () {
     };
     GoodMan.feedCatsBetter = function (cats, foodService, today) {
         var feedCat = function (cat) { return cat.feed(foodService.getCatFood(today)); };
+        var catStillHungry = function (cat) { return cat.hunger > 2; };
         cats.forEach(feedCat);
-        return cats.filter(function (c) { return c.hunger > 2; });
+        return cats.filter(catStillHungry);
     };
     return GoodMan;
 }());
-var Chess = (function () {
+/**
+ * Inline if (ternary operator) for no mutation if statements
+ */
+var IfElse = /** @class */ (function () {
+    function IfElse() {
+        /**
+         * Instance function non mutating if
+         */
+        this.inspectCatsIFOther = function (cats) {
+            return cats.some(function (c) { return c.isHyperActive; })
+                ? 'We got a hyper active cat!'
+                : 'We are all green here sir';
+        };
+    }
+    /**
+     * static mutating if
+     * @param cats
+     */
+    IfElse.inspectCats = function (cats) {
+        var result = '';
+        if (cats.some(function (c) { return c.isHyperActive; })) {
+            result = 'We got a hyper active cat!';
+        }
+        else {
+            result = 'We are all green here sir';
+        }
+        return result;
+    };
+    /**
+     * static non mutating if
+     * @param cats
+     */
+    IfElse.inspectCatsF = function (cats) {
+        return cats.some(function (c) { return c.isHyperActive; })
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
+    };
+    /**
+     * Instance method non mutating if
+     * @param cats
+     */
+    IfElse.prototype.inspectCatsIF = function (cats) {
+        return cats.some(function (c) { return c.isHyperActive; })
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
+    };
+    /**
+     * better looking static no mutating if
+     */
+    IfElse.inspectCatsFOther = function (cats) {
+        return cats.some(function (c) { return c.isHyperActive; })
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
+    };
+    return IfElse;
+}());
+var Chess = /** @class */ (function () {
     function Chess() {
     }
     Chess.setupBoard = function () {
