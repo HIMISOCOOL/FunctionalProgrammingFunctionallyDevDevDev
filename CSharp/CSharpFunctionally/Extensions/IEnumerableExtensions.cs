@@ -11,9 +11,24 @@ namespace CSharpFunctionally.Extensions
             return lists.SelectMany(x => x);
         }
 
-        public static IEnumerable<T> Concat<T>(this IEnumerable<T> src, params IEnumerable<T>[] lists)
+        public static T Random<T>(this IEnumerable<T> src, Random random)
         {
-            return src.Concat(lists.SelectMany(x => x));
+            if (src == null)
+            {
+                throw new ArgumentNullException(nameof(src));
+            }
+
+            return src.ToList().Random(random);
+        }
+
+        public static T Random<T>(this IList<T> src, Random random)
+        {
+            if (src == null)
+            {
+                throw new ArgumentNullException(nameof(src));
+            }
+
+            return src.ElementAt(random.Next(0, src.Count));
         }
     }
 }
