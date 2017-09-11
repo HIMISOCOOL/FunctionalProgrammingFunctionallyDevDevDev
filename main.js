@@ -11,16 +11,56 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Cat = /** @class */ (function () {
-    function Cat(name) {
+    function Cat(name, age) {
         this.age = 0;
         this.isHyperActive = true;
+        this.hunger = 0;
         this.name = name;
+        this.age = age || 0;
     }
     Cat.prototype.feed = function (food) {
         this.hunger -= food.value;
     };
     return Cat;
 }());
+var getSomeNames = function () { return [
+    "Ashes",
+    "Tiger",
+    "Puss",
+    "Smokey",
+    "Misty",
+    "Tigger",
+    "Kitty",
+    "Oscar",
+    "Missy",
+    "Max",
+    "Ginger"
+]; };
+var getSomeCats = function () { return [
+    new Cat("Ashes", 4),
+    new Cat("Tiger", 2),
+    new Cat("Puss", 3),
+    new Cat("Smokey"),
+    new Cat("Misty", 4),
+    new Cat("Tigger", 10),
+    new Cat("Kitty", 4),
+    new Cat("Oscar", 8),
+    new Cat("Missy", 4),
+    new Cat("Max"),
+    new Cat("Ginger", 4),
+    new Cat("Ashes", 2),
+    new Cat("Molly", 4),
+    new Cat("Charlie", 4),
+    new Cat("Tigger", 1),
+    new Cat("Poppy", 10),
+    new Cat("Oscar", 4),
+    new Cat("Smudge", 13),
+    new Cat("Millie", 4),
+    new Cat("Daisy", 7),
+    new Cat("Max", 4),
+    new Cat("Jasper", 16),
+    new Cat("Trevor")
+]; };
 /**
  * map is foreach but returns somthing!
  */
@@ -384,14 +424,21 @@ var IfElse = /** @class */ (function () {
     };
     return IfElse;
 }());
-var Chess = /** @class */ (function () {
-    function Chess() {
+var partialCats = /** @class */ (function () {
+    function partialCats() {
     }
-    Chess.setupBoard = function () {
-        // make white pawns
-        // make black pawns
-        // place white pawns
-        // place black pawns
+    partialCats.prototype.doWorkWithCats = function () {
+        var names = getSomeNames();
+        var cats = partialCats.getCatsByName(names)(getSomeCats());
+        var getCatsOlderThan10 = partialCats.getCatsOlderThan(10);
+        // some other work
+        var oldCats = getCatsOlderThan10(cats);
     };
-    return Chess;
+    partialCats.getCatsByName = function (names) { return function (cats) {
+        return cats.filter(function (c) { return names.includes(c.name); });
+    }; };
+    partialCats.getCatsOlderThan = function (age) { return function (cats) {
+        return cats.filter(function (c) { return c.age >= age; });
+    }; };
+    return partialCats;
 }());
