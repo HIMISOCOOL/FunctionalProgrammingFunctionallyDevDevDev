@@ -161,5 +161,18 @@ namespace CSharpFunctionally
 
             return cats;
         }
+
+        public static void MutateCat(NonFunctionalCat cat)
+        {
+            cat = null;
+        }
+        public static void MutateCat2(NonFunctionalCat cat)
+        {
+            cat = new NonFunctionalCat("Functional devs are hippies .!..");
+        }
+        public static void MutateCat3(NonFunctionalCat cat)
+        {
+            cat.Name = "Hah! Get hacked (╯°□°）╯︵ ┻━┻";
+        }
     }
 }

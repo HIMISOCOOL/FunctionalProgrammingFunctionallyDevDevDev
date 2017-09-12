@@ -65,6 +65,8 @@ namespace CSharpFunctionally
             "Minette",
             "Chanel",
         };
+
+        // Power of expression!
         public static IEnumerable<string> DistinctPopularNames =
             EnumerableExtensions.Concat(
                 PopularCatNamesAustralia,
@@ -79,20 +81,16 @@ namespace CSharpFunctionally
         public string Name { get; private set; }
         public int Age { get; private set; }
 
-        public Cat(string name)
-            : this(name, 0)
-        {
-        }
 
+        private Cat(){}
+        public Cat(string name): this(name, 0){}
         public Cat(string name, int age)
         {
-
+            Id = Guid.NewGuid();
+            Name = name;
+            Age = age;
         }
 
-        private Cat()
-        {
-            
-        }
 
         public static Cat GenerateCat()
         {
