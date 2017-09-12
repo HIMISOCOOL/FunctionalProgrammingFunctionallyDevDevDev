@@ -2,14 +2,55 @@ class Cat {
     public age: number = 0;
     public readonly name: string;
     public isHyperActive: boolean = true;
-    public hunger: number;
+    public hunger: number = 0;
     public feed(food) {
         this.hunger -= food.value;
     }
-    constructor(name: string) {
+    constructor(name: string, age?: number) {
         this.name = name;
+        this.age = age || 0;
     }
 }
+
+const getSomeNames = () => [
+    "Ashes",
+    "Tiger",
+    "Puss",
+    "Smokey",
+    "Misty",
+    "Tigger",
+    "Kitty",
+    "Oscar",
+    "Missy",
+    "Max",
+    "Ginger"
+]
+
+const getSomeCats = () => [
+    new Cat("Ashes", 4),
+    new Cat("Tiger", 2),
+    new Cat("Puss", 3),
+    new Cat("Smokey"),
+    new Cat("Misty", 4),
+    new Cat("Tigger", 10),
+    new Cat("Kitty", 4),
+    new Cat("Oscar", 8),
+    new Cat("Missy", 4),
+    new Cat("Max"),
+    new Cat("Ginger", 4),
+    new Cat("Ashes", 2),
+    new Cat("Molly", 4),
+    new Cat("Charlie", 4),
+    new Cat("Tigger", 1),
+    new Cat("Poppy", 10),
+    new Cat("Oscar", 4),
+    new Cat("Smudge", 13),
+    new Cat("Millie", 4),
+    new Cat("Daisy", 7),
+    new Cat("Max", 4),
+    new Cat("Jasper", 16),
+    new Cat("Trevor")
+]
 
 /**
  * map is foreach but returns somthing!
@@ -377,12 +418,21 @@ class IfElse {
             : 'We are all green here sir';
 }
 
-class Chess {
+class partialCats {
+    public static getCatsByName = (names: string[]) => (cats: Cat[]) =>
+        cats.filter(c => names.includes(c.name));
 
-    public static setupBoard() {
-        // make white pawns
-        // make black pawns
-        // place white pawns
-        // place black pawns
+    public static getCatsOlderThan = (age: number) => (cats: Cat[]) =>
+        cats.filter(c => c.age >= age);
+
+    public doWorkWithCats() {
+        const names = getSomeNames();
+        const cats = partialCats.getCatsByName(names)(getSomeCats());
+
+        const getCatsOlderThan10 = partialCats.getCatsOlderThan(10);
+        // some other work
+        const oldCats = getCatsOlderThan10(cats);
     }
 }
+
+
