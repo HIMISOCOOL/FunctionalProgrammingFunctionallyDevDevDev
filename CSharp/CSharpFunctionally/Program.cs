@@ -1,4 +1,5 @@
-﻿using CSharpFunctionally.Immutability;
+﻿using CSharpFunctionally.HigherOrderFunctions;
+using CSharpFunctionally.Immutability;
 using System;
 using System.Linq;
 
@@ -8,8 +9,8 @@ namespace CSharpFunctionally
     {
         static void Main(string[] args)
         {
-            //Demo1();
-            DemoImmutability();
+            //DemoImmutability();
+            DemoHigherOrderFunctions();
         }
 
         private static void DemoImmutability()
@@ -34,14 +35,18 @@ namespace CSharpFunctionally
             dataStructures.OddBehaviour();
         }
 
-        static void Demo1()
+        static void DemoHigherOrderFunctions()
         {
-            var demo1 = new ExceptAndIntersectFunctionally();
+            Linq.DemoFilter();
 
-            var random = new Random();
-            var newCats = Cat.GenerateCats(random.Next(0, 9));
+            Linq.DemoSelect();
 
-            demo1.AddNewCats(newCats);
+            Linq.DemoAll();
+
+            //var badCats = Enumerable.Range(0, 5)
+            //    .Select(i => new Cat("Bad cat"));
+
+            //ExceptKeys.Demo(badCats);
         }
     }
 }
