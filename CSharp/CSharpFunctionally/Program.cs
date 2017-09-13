@@ -9,7 +9,7 @@ namespace CSharpFunctionally
     {
         static void Main(string[] args)
         {
-            //DemoImmutability();
+            DemoImmutability();
             DemoHigherOrderFunctions();
         }
 
@@ -17,6 +17,8 @@ namespace CSharpFunctionally
         {
             var demo = new KindsOfImmutability();
             demo.Mutate();
+
+
 
             var cat = new NonFunctionalCat("Arnold");
             NonFunctionalCat.MutateCat(cat);
@@ -28,25 +30,30 @@ namespace CSharpFunctionally
             NonFunctionalCat.MutateCat3(cat);
             Console.WriteLine(cat.Name);
 
-            var dataStructures = new DataStructures();
 
-            dataStructures.ImmutableStackCanShareState();
 
-            dataStructures.OddBehaviour();
+            //var dataStructures = new DataStructures();
+
+            //dataStructures.ImmutableStackCanShareState();
+
+            //dataStructures.OddBehaviour();
         }
 
         static void DemoHigherOrderFunctions()
         {
             Linq.DemoFilter();
 
+            Linq.DemoAllAndAny();
+
             Linq.DemoSelect();
 
-            Linq.DemoAll();
+            Linq.DemoSelectMany();
 
-            //var badCats = Enumerable.Range(0, 5)
-            //    .Select(i => new Cat("Bad cat"));
+            Linq.DemoAggregate();
 
-            //ExceptKeys.Demo(badCats);
+            Linq.DemoOrderBy();
+
+            Linq.DemoExceptIntersect();
         }
     }
 }

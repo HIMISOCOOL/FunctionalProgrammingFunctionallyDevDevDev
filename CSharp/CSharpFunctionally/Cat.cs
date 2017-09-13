@@ -102,11 +102,11 @@ namespace CSharpFunctionally
             };
         }
 
-        public static List<Cat> GenerateCats(int number)
+        public static Cat[] GenerateCats(int number)
         {
             return Enumerable.Range(0, number)
                 .Select(i => GenerateCat())
-                .ToList();
+                .ToArray();
         }
     }
 }
