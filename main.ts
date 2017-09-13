@@ -1,4 +1,4 @@
-
+const maxAge = 20;
 class Cat {
     public age: number = 0;
     public readonly name: string;
