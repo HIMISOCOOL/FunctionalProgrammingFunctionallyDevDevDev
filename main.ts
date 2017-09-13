@@ -192,6 +192,9 @@ function averageAgeF(cats: Cat[]) {
         .reduce((prev, curr) => prev + curr) / cats.length;
 }
 
+const averageAgeFDiffered = (cats: Cat[]) => () => 
+    averageAgeF(cats);
+
 class ResultCommonLogic {
     public readonly isFailure: boolean;
     public get isSuccess() {
@@ -458,12 +461,17 @@ const main = () => {
     const averageCatAge = averageAge(cats);
     const averageCatAge1 = averageAgeF(cats);
 
+    
     const badMan = new BadMan();
     const stillHungry = badMan.feedCats(cats);
-
+    
     const stillHungry1 = GoodMan.feedCats(cats, globalFoodService, new Date());
     const stillHungry2 = GoodMan.feedCatsBetter(cats, globalFoodService, new Date());
     const stillHungry3 = GoodMan.feedCatsWithFunctions(cats, globalFoodService.getCatFood, new Date(), c => c.hunger > 2);
+    const getAverageAgeOfOlderCatsThatAreStillHungry = averageAgeFDiffered(GoodMan.feedCatsWithFunctions(makeCatsOldF(oldCats1), globalFoodService.getCatFood, new Date(), c => c.hunger > 2));
+
+    const averageAgeOfOlderCatsThatAreStillHungry = getAverageAgeOfOlderCatsThatAreStillHungry();
+
 
     const hyperActiveCats = IfElse.inspectCats(cats);
     const hyperActiveCats1 = IfElse.inspectCatsF(cats);
