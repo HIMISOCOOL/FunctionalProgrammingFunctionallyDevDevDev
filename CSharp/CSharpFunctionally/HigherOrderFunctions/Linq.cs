@@ -31,7 +31,12 @@ namespace CSharpFunctionally.HigherOrderFunctions
 
         public static void SelectMany()
         {
+            Cat[][] cats = new Cat[8][];
 
+            Cat[] catsFlat = cats
+                .SelectMany(catArray => catArray)
+                .ToArray();
         }
+
     }
 }
