@@ -97,7 +97,7 @@ function olderCatsF(cats) {
 /**
  * YOU CAN FITLER AND MAP IN ONE(ish) LINES!
  */
-function nameOlderCats(cats) {
+function makeCatsOld(cats) {
     var oldCats = [];
     for (var i = 0; i < cats.length; i++) {
         var cat = cats[i];
@@ -109,9 +109,9 @@ function nameOlderCats(cats) {
     }
     return oldCats;
 }
-function nameOlderCatsF(cats) {
+function makeCatsOldF(cats) {
     return cats.filter(function (c) { return c.age > 5; }).map(function (c) {
-        c.isHyperActive = true;
+        c.isHyperActive = false;
         return c;
     });
 }
@@ -333,11 +333,17 @@ var CommandServiceF = /** @class */ (function () {
     };
     return CommandServiceF;
 }());
+var foodService = {
+    getCatFood: function (date) {
+        return { value: 5 };
+    }
+};
 /**
  * Using local functions can help make code more readable
  */
 var BadMan = /** @class */ (function () {
     function BadMan() {
+        this.foodService = foodService;
     }
     BadMan.prototype.feedCats = function (cats) {
         var stillHungry = [];
@@ -362,9 +368,13 @@ var GoodMan = /** @class */ (function () {
     };
     GoodMan.feedCatsBetter = function (cats, foodService, today) {
         var feedCat = function (cat) { return cat.feed(foodService.getCatFood(today)); };
-        var catStillHungry = function (cat) { return cat.hunger > 2; };
         cats.forEach(feedCat);
-        return cats.filter(catStillHungry);
+        return cats.filter(function (cat) { return cat.hunger > 2; });
+    };
+    GoodMan.feedCatsWithFunctions = function (cats, getCatFood, today, catsStillHungry) {
+        var feedCat = function (cat) { return cat.feed(getCatFood(today)); };
+        cats.forEach(feedCat);
+        return cats.filter(catsStillHungry);
     };
     return GoodMan;
 }());
@@ -427,18 +437,39 @@ var IfElse = /** @class */ (function () {
 var partialCats = /** @class */ (function () {
     function partialCats() {
     }
-    partialCats.prototype.doWorkWithCats = function () {
-        var names = getSomeNames();
-        var cats = partialCats.getCatsByName(names)(getSomeCats());
-        var getCatsOlderThan10 = partialCats.getCatsOlderThan(10);
-        // some other work
-        var oldCats = getCatsOlderThan10(cats);
-    };
     partialCats.getCatsByName = function (names) { return function (cats) {
         return cats.filter(function (c) { return names.includes(c.name); });
     }; };
     partialCats.getCatsOlderThan = function (age) { return function (cats) {
-        return cats.filter(function (c) { return c.age >= age; });
+        return cats.filter(function (c) { return c.age > age; });
     }; };
     return partialCats;
 }());
+var main = function () {
+    var cats = getSomeCats();
+    var oldCats = ageCats(cats);
+    var oldCats1 = ageCatsF(cats);
+    var catsThatAreOld = olderCats(oldCats);
+    var catsThatAreOld1 = olderCatsF(oldCats);
+    var nonHyperActiveOldCats = makeCatsOld(oldCats);
+    var nonHyperActiveOldCats1 = makeCatsOldF(oldCats);
+    var averageCatAge = averageAge(cats);
+    var averageCatAge1 = averageAgeF(cats);
+    var badMan = new BadMan();
+    var stillHungry = badMan.feedCats(cats);
+    var stillHungry1 = GoodMan.feedCats(cats, foodService, new Date());
+    var stillHungry2 = GoodMan.feedCatsBetter(cats, foodService, new Date());
+    var stillHungry3 = GoodMan.feedCatsWithFunctions(cats, foodService.getCatFood, new Date(), function (c) { return c.hunger > 2; });
+    var hyperActiveCats = IfElse.inspectCats(cats);
+    var hyperActiveCats1 = IfElse.inspectCatsF(cats);
+    var hyperActiveCats2 = IfElse.inspectCatsFOther(cats);
+    var catInspector = new IfElse();
+    var hyperActiveCats3 = catInspector.inspectCatsIF(cats);
+    var hyperActiveCats4 = catInspector.inspectCatsIFOther(cats);
+    var names = getSomeNames();
+    var catsByName = partialCats.getCatsByName(names)(getSomeCats());
+    var getCatsOlderThan10 = partialCats.getCatsOlderThan(10);
+    // some other work
+    var catsOlderThan10 = getCatsOlderThan10(cats);
+};
+main();

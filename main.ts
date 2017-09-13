@@ -1,3 +1,4 @@
+
 class Cat {
     public age: number = 0;
     public readonly name: string;
@@ -53,6 +54,66 @@ const getSomeCats = () => [
 ]
 
 /**
+ * Inline if (ternary operator) for no mutation if statements
+ */
+class IfElse {
+    /**
+     * static mutating if
+     * @param cats 
+     */
+    public static inspectCats(cats: Cat[]) {
+        let result = '';
+        if (cats.some(c => c.isHyperActive)) {
+            result = 'We got a hyper active cat!';
+            // var result = 'We got a hyper active cat!';
+        } /*else if (false) {
+            console.log('I didnt do anything heh');
+        }*/
+        else {
+            result = 'We are all green here sir';
+            // var result = 'We are all green here sir';
+        }
+        return result;
+    }
+
+    /**
+     * static non mutating if
+     * @param cats 
+     */
+    public static inspectCatsF(cats: Cat[]) {
+        return cats.some(c => c.isHyperActive)
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
+    }
+
+    /**
+     * better looking static no mutating if
+     */
+    public static inspectCatsFOther = (cats: Cat[]) =>
+        cats.some(c => c.isHyperActive)
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
+
+    /**
+     * Instance method non mutating if
+     * @param cats 
+     */
+    public inspectCatsIF(cats: Cat[]) {
+        return cats.some(c => c.isHyperActive)
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
+    }
+
+    /**
+     * Instance function non mutating if
+     */
+    public inspectCatsIFOther = (cats: Cat[]) =>
+        cats.some(c => c.isHyperActive)
+            ? 'We got a hyper active cat!'
+            : 'We are all green here sir';
+}
+
+/**
  * map is foreach but returns somthing!
  */
 function ageCats(cats: Cat[]) {
@@ -93,7 +154,7 @@ function olderCatsF(cats: Cat[]) {
 /**
  * YOU CAN FITLER AND MAP IN ONE(ish) LINES!
  */
-function nameOlderCats(cats: Cat[]) {
+function makeCatsOld(cats: Cat[]) {
     let oldCats = [];
     for (let i = 0; i < cats.length; i++) {
         let cat = cats[i];
@@ -106,9 +167,9 @@ function nameOlderCats(cats: Cat[]) {
     return oldCats;
 }
 
-function nameOlderCatsF(cats: Cat[]) {
+function makeCatsOldF(cats: Cat[]) {
     return cats.filter(c => c.age > 5).map(c => {
-        c.isHyperActive = true;
+        c.isHyperActive = false;
         return c;
     });
 }
@@ -324,17 +385,23 @@ class CommandServiceF {
     }
 }
 
+const globalFoodService = {
+    getCatFood: (date: Date) => {
+        return { value: 5 };
+    }
+};
+
 /**
  * Using local functions can help make code more readable
  */
 class BadMan {
     public foodService;
     constructor() {
-
+        this.foodService = globalFoodService;
     }
 
     feedCats(cats: Cat[]) {
-        let stillHungry = [];
+        let stillHungry: Cat[] = [];
         for (let i = 0; i < cats.length; i++) {
             let catfood = this.foodService.getCatFood(new Date());
             let cat = cats[i];
@@ -356,66 +423,16 @@ class GoodMan {
 
     public static feedCatsBetter(cats: Cat[], foodService, today: Date) {
         const feedCat = (cat: Cat) => cat.feed(foodService.getCatFood(today));
-        const catStillHungry = (cat: Cat) => cat.hunger > 2;
+
         cats.forEach(feedCat);
-        return cats.filter(catStillHungry);
-    }
-}
-
-
-/**
- * Inline if (ternary operator) for no mutation if statements
- */
-class IfElse {
-    /**
-     * static mutating if
-     * @param cats 
-     */
-    public static inspectCats(cats: Cat[]) {
-        let result = '';
-        if (cats.some(c => c.isHyperActive)) {
-            result = 'We got a hyper active cat!';
-        } else {
-            result = 'We are all green here sir';
-        }
-        return result;
+        return cats.filter((cat: Cat) => cat.hunger > 2);
     }
 
-    /**
-     * static non mutating if
-     * @param cats 
-     */
-    public static inspectCatsF(cats: Cat[]) {
-        return cats.some(c => c.isHyperActive)
-            ? 'We got a hyper active cat!'
-            : 'We are all green here sir';
+    public static feedCatsWithFunctions(cats: Cat[], getCatFood: (date: Date) => any, today: Date, catsStillHungry: (cat: Cat) => boolean) {
+        const feedCat = (cat: Cat) => cat.feed(getCatFood(today));
+        cats.forEach(feedCat);
+        return cats.filter(catsStillHungry);
     }
-
-    /**
-     * better looking static no mutating if
-     */
-    public static inspectCatsFOther = (cats: Cat[]) =>
-        cats.some(c => c.isHyperActive)
-            ? 'We got a hyper active cat!'
-            : 'We are all green here sir';
-
-    /**
-     * Instance method non mutating if
-     * @param cats 
-     */
-    public inspectCatsIF(cats: Cat[]) {
-        return cats.some(c => c.isHyperActive)
-            ? 'We got a hyper active cat!'
-            : 'We are all green here sir';
-    }
-
-    /**
-     * Instance function non mutating if
-     */
-    public inspectCatsIFOther = (cats: Cat[]) =>
-        cats.some(c => c.isHyperActive)
-            ? 'We got a hyper active cat!'
-            : 'We are all green here sir';
 }
 
 class partialCats {
@@ -423,16 +440,45 @@ class partialCats {
         cats.filter(c => names.includes(c.name));
 
     public static getCatsOlderThan = (age: number) => (cats: Cat[]) =>
-        cats.filter(c => c.age >= age);
+        cats.filter(c => c.age > age);
+}
 
-    public doWorkWithCats() {
-        const names = getSomeNames();
-        const cats = partialCats.getCatsByName(names)(getSomeCats());
+const main = () => {
+    const cats = getSomeCats();
 
-        const getCatsOlderThan10 = partialCats.getCatsOlderThan(10);
-        // some other work
-        const oldCats = getCatsOlderThan10(cats);
-    }
+    const oldCats = ageCats(cats);
+    const oldCats1 = ageCatsF(cats);
+
+    const catsThatAreOld = olderCats(oldCats);
+    const catsThatAreOld1 = olderCatsF(oldCats);
+
+    const nonHyperActiveOldCats = makeCatsOld(oldCats);
+    const nonHyperActiveOldCats1 = makeCatsOldF(oldCats);
+
+    const averageCatAge = averageAge(cats);
+    const averageCatAge1 = averageAgeF(cats);
+
+    const badMan = new BadMan();
+    const stillHungry = badMan.feedCats(cats);
+
+    const stillHungry1 = GoodMan.feedCats(cats, globalFoodService, new Date());
+    const stillHungry2 = GoodMan.feedCatsBetter(cats, globalFoodService, new Date());
+    const stillHungry3 = GoodMan.feedCatsWithFunctions(cats, globalFoodService.getCatFood, new Date(), c => c.hunger > 2);
+
+    const hyperActiveCats = IfElse.inspectCats(cats);
+    const hyperActiveCats1 = IfElse.inspectCatsF(cats);
+    const hyperActiveCats2 = IfElse.inspectCatsFOther(cats);
+    const catInspector = new IfElse();
+    const hyperActiveCats3 = catInspector.inspectCatsIF(cats);
+    const hyperActiveCats4 = catInspector.inspectCatsIFOther(cats);
+
+    const names = getSomeNames();
+    const catsByName = partialCats.getCatsByName(names)(getSomeCats());
+
+    const getCatsOlderThan10 = partialCats.getCatsOlderThan(10);
+    // some other work
+    const catsOlderThan10 = getCatsOlderThan10(cats);
 }
 
 
+main();
